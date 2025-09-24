@@ -1,0 +1,52 @@
+<section>
+    <div class="container-form">
+        <div class="form">
+            <form [formGroup]="LoginForm" (ngSubmit)="loginData()">
+                <h2>Inicia sesion en el sistema</h2>
+                <p class="info-register">
+                    Puedes inicar sesion con tu <strong>correo electrónico</strong> o tu <strong>número de
+                        teléfono</strong>
+                </p>
+                <div class="input">
+                    <div class="phone">
+                        @if (showCountryCode) {
+                            <mat-form-field appearance="outline">
+                                <mat-label>Codigo de pais</mat-label>
+                                <mat-select formControlName="countryCode">
+                                    <mat-option value="+52">🇲🇽 México (+52)</mat-option>
+                                    <mat-option value="+1">🇺🇸 USA (+1)</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        }
+                        <mat-form-field appearance="outline" [ngStyle]="showCountryCode === false ? {'width': '100%'} : {}">
+                            <mat-label>Email o Telefono</mat-label>
+                            <input matInput type="text" formControlName="phoneOrEmail">
+                            <mat-error>
+                                Debes de ingresar algo
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" formControlName="password">
+                        <mat-error>
+                            La contraseña es necesario
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+             
+
+                <div class="container-action">
+                    <button type="submit" [disabled]="LoginForm.invalid">Iniciar sesion</button>
+                </div>
+            </form>
+        </div>
+        <div id="recaptcha-container"></div>
+        <div class="sing-in">
+            <p>¿No tienes cuenta? <a routerLink="/sign-up">Registrate</a> </p>
+        </div>
+    </div>
+    <br>
+    <br>
+</section>

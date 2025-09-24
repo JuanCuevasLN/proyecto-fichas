@@ -1,0 +1,13 @@
+<mat-dialog-content class="custom-dialog-content">
+    <img src="https://img.freepik.com/vector-premium/mensaje-codigo-verificacion-autenticacion-dos-pasos-telefono-inteligente-concepto-inicio-sesion-seguridad-dos-factores_476325-1172.jpg"
+        alt="Imagen que muestra la acción de recibir un código">
+    <div class="code-input-wrapper">
+        <input (input)="focusNext(i)" (keydown)="onKeyDown($event, i)" #codeInput type="text" maxlength="1" *ngFor="let digit of userCode; let i = index">
+    </div>
+    <p>
+        Código de verificación. Hemos enviado un código de verificación al número de teléfono que proporcionaste.
+        Por favor, revisa tus mensajes SMS y escribe el código recibido a continuación.
+    </p>
+
+    <button mat-raised-button color="primary" (click)="verifyCode()">Confirmar código</button>
+</mat-dialog-content>

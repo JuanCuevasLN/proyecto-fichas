@@ -1,0 +1,23 @@
+
+<div (click)="fileInput.click()" class="container-drag-drop" [ngStyle]="{'width': width, 'height': height}">
+      <div class="container-img">
+        @if (arrImagenSrc.length) {
+          <ng-container *ngFor="let imagen of arrImagenSrc; let i = index">
+            <div class="img-wrapper">
+              <img [src]="imagen" alt="">
+              <button type="button" class="btn-delete" (click)="removeImage(i); $event.stopPropagation()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        } @else {
+          <mat-icon class="big-icon">cloud_upload</mat-icon>
+        }
+      </div>
+      <div class="container-info">
+        <strong>Haz clic en cualquier parte del recuadro para seleccionarlas desde tu dispositivo.</strong>
+        <p>Puedes seleccionar varias imágenes manteniendo presionada la tecla <kbd>Ctrl</kbd> mientras haces clic.</p>
+        <p>Formatos permitidos: <strong>JPG, PNG, WebP</strong> • Tamaño máximo por imagen: <strong>80 MB</strong></p>
+        <input #fileInput hidden type="file" accept="image/*" multiple (change)="onImageSelected($event)"/>
+      </div>
+</div>

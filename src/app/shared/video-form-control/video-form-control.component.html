@@ -1,0 +1,28 @@
+<div class="container-drag-drop" (click)="fileInput.click()" [ngStyle]="{'width': width, 'height': height}">
+    <div class="container-img">
+        @if (arrVideoSrc.length) {
+            <ng-container *ngFor="let video of arrVideoSrc; let i = index">
+                <div class="video-wrapper">
+                    <video [src]="video"></video>
+
+                    <div class="btn-action">
+                        <button type="button" class="visibility">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                        <button  type="button" (click)="removeVideo(i); $event.stopPropagation()">     
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        } @else {
+            <mat-icon class="big-icon">cloud_upload</mat-icon>
+        }
+    </div>
+    <div class="container-info">
+        <strong>Haz clic en cualquier parte del recuadro para seleccionarlos desde tu dispositivo.</strong>
+        <p>Puedes seleccionar varios videos manteniendo presionada la tecla <kbd>Ctrl</kbd> (o <kbd>Cmd</kbd> en Mac) mientras haces clic.</p>
+        <p>Formatos permitidos: <strong>MP4, WebM, AVI</strong> • Tamaño máximo por video: <strong>200 MB</strong></p>
+        <input type="file" #fileInput hidden accept="video/*" multiple (change)="onVideoSelected($event)">
+    </div>
+</div>

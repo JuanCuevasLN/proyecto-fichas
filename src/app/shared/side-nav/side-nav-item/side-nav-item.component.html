@@ -1,0 +1,12 @@
+<div class="container-father">
+    <div class="text-seccion">
+        <mat-icon> {{item.icon}} </mat-icon>
+        <p> {{item.label}}</p>
+    </div>
+    @for (son of item.children; track $index) {
+        <div class="container-son">
+            <mat-icon> {{son.icon}} </mat-icon> 
+            <a [routerLink]="son.router"> {{ son.label }} </a>
+        </div>
+    }
+</div>

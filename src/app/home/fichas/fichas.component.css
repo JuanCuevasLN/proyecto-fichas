@@ -1,0 +1,19 @@
+.container-creation {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    margin-top: 75px;
+    align-items: center;
+    justify-content: end;
+}
+
+.creation {
+    width: auto;
+    height: auto;
+    margin-right: 75px;
+}
+
+.creation button {
+    background-color:  #752BDF;
+    color: #fff;
+}

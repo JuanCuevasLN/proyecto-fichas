@@ -1,0 +1,148 @@
+section{
+    width: 100%;
+    height: auto;
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+.container-info{
+    width: 50%;
+    height:auto;
+    background: black;
+}
+
+.container-form{
+    width: 50%;
+    padding-bottom: 45px;
+    height:max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.sing-in{
+    display: flex;
+    width: 100%;
+    height: 70px;
+    align-items: center; 
+    justify-content: end; 
+
+    p {
+        padding-right: 50px;
+    }
+}
+
+.form{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+form{
+    width: 80%;
+    height: 100%;
+
+}
+.input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+}
+div {
+    width: 100%;
+}
+mat-form-field{
+    width: 100%;
+    height: 60px;
+}
+
+.cotainer-drag-drop{
+    width: 100%;
+    height: 290px;
+    display: flex;
+    border: 1px solid #d1d1d1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.container-img{
+    width: 80%;
+    border-radius: 5px;
+    height: 210px;
+    background: #F8F8FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+img{
+    width: 60px;
+}
+p{
+    text-align: center;
+}
+button{
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 130px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.phone{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    mat-form-field {
+        width: 60%;
+    }
+
+    mat-form-field:first-child {
+        width: 35%;
+    }
+}
+.info-register {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+
+.container-action{
+    margin-top: 30px;
+    width: 100%;
+
+    button{
+        width: 100%;
+        height: 50px;
+        background: #000000;
+        color: #ffffff;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    section {
+        flex-direction: column;
+
+        .container-img,
+        .container-form {
+            width: 100%;
+            height: 50%;
+        }
+
+        .form {
+            height: auto;
+        }
+    }
+}
+
+

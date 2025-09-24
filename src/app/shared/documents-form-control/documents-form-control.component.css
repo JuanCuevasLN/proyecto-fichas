@@ -1,0 +1,133 @@
+.container-drag-drop {
+  display: flex;
+  color: black;
+  border-radius: 5px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  outline: 2px dashed rgba(139, 92, 246, 0.4);
+  transition: .7s all;
+}
+
+.container-drag-drop:hover {
+  cursor: pointer;
+  outline: 2px dashed #f65c5c;
+}
+
+.container-drag-drop div {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-drag-drop .container-pdf {
+    gap: 8px;
+    width: 95%;
+    height: 35%;
+    display: grid;
+    align-items: center;    
+    justify-items: center;       
+    justify-content: center;    
+    grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+}
+
+.container-drag-drop .container-pdf .big-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 58px;
+    color: #525151;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-drag-drop .container-info {
+    height: 45%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+}
+
+.container-drag-drop .container-info strong {
+  font-size: 14px;
+}
+
+p {
+  font-size: 12px;
+}
+
+.container-document {
+  gap: 12px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin-top: 25px;
+  flex-direction: column;
+}
+
+.document-flex {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  border-radius: 5px;
+  align-items: center;
+  outline: 1px solid #d6d6d6;
+  justify-content: space-between;
+}
+
+.document-flex .icon {
+  width: 7%;
+  height: 100%;
+  display: flex;
+  color: #177fa8;
+  align-items: center;
+  justify-content: center;
+}
+
+.document-flex .name {
+  width: 86%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.document-flex .name p {
+  color: #000;
+  font-size: 14px;
+  padding-top: 3px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.document-flex .action {
+  width: 7%;
+  height: 100%;
+  align-content: center;
+}
+
+.action .btn-action {
+  width: 25px;
+  height: 25px;
+  border: none;
+  display: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: #E94740;
+}
+
+.document-flex:hover .btn-action {
+  display: flex; 
+}
+
+.document-flex:hover .btn-action {
+  display: block;
+}

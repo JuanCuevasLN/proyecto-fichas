@@ -1,0 +1,112 @@
+.container-drag-drop {
+  display: flex;
+  color: black;
+  border-radius: 5px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  outline: 2px dashed rgba(139, 92, 246, 0.4);
+  transition: .7s all;
+}
+
+.container-drag-drop:hover {
+    cursor: pointer;
+     outline: 2px dashed #8b5cf6;
+}
+
+.container-drag-drop div {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-drag-drop .container-img {
+    gap: 8px;
+    width: 95%;
+    height: 55%;
+    display: grid;
+    align-items: center;    
+    justify-items: center;       
+    justify-content: center;    
+    grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+}
+
+.container-drag-drop .container-img .big-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 58px;
+    color: #525151;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-drag-drop .container-info {
+    height: 45%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+}
+
+.container-drag-drop .container-info strong {
+  font-size: 14px;
+}
+
+p {
+    font-size: 12px;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+}
+
+video {
+  max-width: 130px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.btn-action {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  display: none;
+  align-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-action button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  display: none;
+  border-radius: 5px;
+  z-index: 3;
+  cursor: pointer;
+  color: #fff;
+  align-content: center;
+  background-color: #E94740;
+}
+
+.btn-action .visibility {
+  color: #000;
+  background: #fff;
+}
+
+.video-wrapper:hover .btn-action {
+  display: flex; /* o block, pero flex te permite usar 'gap' */
+}
+
+.video-wrapper:hover .btn-action button {
+  display: block;
+}

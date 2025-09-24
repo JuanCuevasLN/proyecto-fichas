@@ -1,0 +1,51 @@
+::ng-deep .mat-dialog-container {
+  padding: 0; /* si deseas quitar padding por defecto */
+}
+
+.custom-dialog-content {
+  width: 600px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.custom-dialog-content img {
+  width: 280px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.custom-dialog-content p {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.custom-dialog-content button {
+    border: none;
+    width: 160px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    background: #7F3BF9;
+}
+
+.code-input-wrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.code-input-wrapper input {
+  width: 35px;
+  height: 45px;
+  font-size: 28px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}

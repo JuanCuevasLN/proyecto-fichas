@@ -1,0 +1,39 @@
+<div class="container-drag-drop" (click)="fileInput.click()"  [ngStyle]=" {'width': width, 'height': '200px'} ">
+    <div class="container-pdf">
+        @if(validFile.length == 0) {
+            <mat-icon class="big-icon">cloud_upload</mat-icon>
+        }
+    </div>
+    <div class="container-info">
+        <strong>Haz clic en cualquier parte del recuadro para seleccionarlos desde tu dispositivo.</strong>
+        <p>Puedes seleccionar varios archivos manteniendo presionada la tecla <kbd>Ctrl</kbd> (o <kbd>Cmd</kbd> en Mac) mientras haces clic.</p>
+        <p>Formatos permitidos: <strong>.pdf, .doc, .txt, .docx</strong> • Tamaño máximo por archivo: <strong>200 MB</strong></p>
+        <input type="file" #fileInput hidden accept=".pdf,.doc,.docx,.txt" multiple (change)="onDocumentSelect($event)">
+    </div>
+</div>
+
+<div class="container-document">
+    @if (validFile.length) {
+       @for (document of validFile; track $index) {
+           <div class="document-flex">
+                <div class="icon">
+                    @if (document.type.split('/')[1] == 'pdf') {
+                        <mat-icon [ngStyle]="{'color': '#E94740'}">picture_as_pdf</mat-icon>
+                    } @else {
+                        <mat-icon>description</mat-icon>
+                    }
+                </div>
+                <div class="name">
+                    <p>{{document.name}}</p>
+                    <p>{{document.size / 1000000}} MB</p>
+                </div>
+                <div class="action">
+                    <button class="btn-action" (click)="removeDocumen($index)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+           </div>
+       }
+   }
+</div>
+<br>

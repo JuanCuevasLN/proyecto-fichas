@@ -1,0 +1,6 @@
+<div class="div-container">
+    @for (item of item$ | async; track item) {
+        <app-side-nav-item [item]='item' />
+        <br>
+    }
+</div>

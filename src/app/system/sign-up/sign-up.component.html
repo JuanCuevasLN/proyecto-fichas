@@ -1,0 +1,79 @@
+<section>
+    <div class="container-info">
+        <p>Crea una cuenta para poder tener acceso a todos los recursos</p>
+    </div>
+    <div class="container-form">
+        <div class="sing-in">
+            <p>¿Ya tienes una cuenta? <a routerLink="/sign-in">Iniciar sesion</a> </p>
+        </div>
+        <div class="form">
+            <form [formGroup]="registerForm" (ngSubmit)="saveData()">
+                <h2>Crear cuenta de operador</h2>
+                <p class="info-register">
+                    Puedes registrarte utilizando tu <strong>correo electrónico</strong> o tu <strong>número de
+                        teléfono</strong>. Solo uno de los dos es obligatorio.
+                </p>
+                <div class="input">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" formControlName="displayName">
+                        <mat-error>
+                            {{nameError}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Correo electronico</mat-label>
+                        <input matInput type="text" formControlName="email">
+                        <mat-error>
+                            El email no cumple con el formato solicitado
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="phone">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Codigo de pais</mat-label>
+                            <mat-select formControlName="countryCode">
+                                <mat-option value="+52">🇲🇽 México (+52)</mat-option>
+                                <mat-option value="+1">🇺🇸 USA (+1)</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        
+                        <mat-form-field appearance="outline">
+                            <mat-label>Telefono</mat-label>
+                            <input matInput type="tel" formControlName="phone">
+                            <mat-error>
+                                El teléfono debe tener al menos 10 dígitos
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput type="password" formControlName="password">
+                            <mat-error *ngIf="this.registerForm.get('password')?.invalid">
+                                {{passError}}
+                            </mat-error>
+                        </mat-form-field>
+                        <div
+                            [ngStyle]="{ 'margin-top': registerForm.get('password')?.touched && registerForm.get('password')?.invalid ? '20px' : '0px'}">
+                            <p class="password-info">
+                                La contraseña debe tener al menos 15 caracteres O al menos 8 caracteres que incluyan un
+                                número y una letra minúscula.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <app-image-form-control formControlName="imagen" type="imagen" accept="image/*" [imageSwitch]="true"/>
+                    </div>
+                </div>
+
+                <div class="container-action">
+                    <button type="submit" [disabled]="registerForm.invalid">Crear cuenta</button>
+                </div>
+                <a routerLink="anime">Mira los productos que puedes encontrar en el sistema</a>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,26 @@
+<button (click)="showTime()" class="button-show" type="button">
+  {{hora}}
+
+  <mat-icon>schedule</mat-icon>
+</button>
+@if (open) {
+  <div class="panel">
+    <div class="grid">
+      <div class="hour">
+        <div *ngFor="let h of hours" #hourDiv class="item" (click)="selectHour(h)" [class.active]="h == hour">
+          {{h}}
+        </div>
+      </div>
+      <div class="minute">
+        <div *ngFor="let m of minutes" #minuteDiv class="item" (click)="selectMinute(m)" [class.active]="m == minute">
+          {{m}}
+        </div>
+      </div>
+      <div class="period">
+        <div class="item" (click)="selectPeriod('PM')" [class.active]="'PM' == period">PM</div>
+        <div class="item" (click)="selectPeriod('AM')" [class.active]="'AM' == period">AM</div>
+      </div>
+    </div>
+  </div>
+} 
+<input type="text" hidden [value]="hora">

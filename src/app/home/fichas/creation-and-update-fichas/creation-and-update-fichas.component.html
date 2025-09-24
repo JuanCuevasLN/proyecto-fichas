@@ -1,0 +1,693 @@
+<div mat-dialog-title class="mat-titulo">
+    <p>Crear Ficha</p>
+    <button mat-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-divider class="text-border"></mat-divider>
+
+<mat-dialog-content class="container-form">
+    <mat-stepper #stepper linear>
+        //first form
+        <mat-step [stepControl]="firstFichasDataForm" >
+            <form [formGroup]="firstFichasDataForm">
+                <ng-template matStepLabel>
+                    Información general
+                </ng-template>
+
+                <b>Datos generales del evento </b>
+                <div class="step-content-scrollable">
+                    <div class="input-single">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Título del suceso</mat-label>
+                            <input matInput formControlName="titulo" cdkFocusInitial>
+                            <mat-error *ngIf="firstFichasDataForm.get('titulo')?.hasError('required')">
+                                El título es obligatorio.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="two-container">
+                        <div>
+                            <label>Hora del suceso</label>
+                            <app-time-form formControlName="horaDelSuceso"></app-time-form>
+                        </div>
+                        <div>
+                            <mat-form-field class="child-form">
+                                <mat-label>Fecha del suceso</mat-label>
+                                <input type="date" matInput formControlName="fechaSuceso">
+                                <mat-icon matSuffix>event</mat-icon>
+                                <mat-error *ngIf="firstFichasDataForm.get('fechaSuceso')?.hasError('required')">
+                                    La fecha del suceso es obligatoria.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div formGroupName="clasificacion" class="two-container">
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Tema</mat-label>
+                                <input type="text" matInput formControlName="tema"
+                                    placeholder="Ejp. Narcotráfico, Corrupción, Delitos contra la vida, etc.">
+                                <mat-error *ngIf="firstFichasDataForm.get('clasificacion')?.get('tema')?.invalid">
+                                    El tema es obligatorio.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Tipo</mat-label>
+                                <input type="text" matInput formControlName="tipo"
+                                    placeholder="Ejp. Homicidio, Extorsión, Tráfico de armas, etc.">
+                                <mat-error *ngIf="firstFichasDataForm.get('clasificacion')?.get('tipo')?.invalid">
+                                    El tipo es obligatorio.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="input-single">
+                        <p class="campo-descripcion-explicacion">
+                            Describe con detalle lo que ocurrió en el suceso.
+                        </p>
+
+                        <mat-form-field>
+                            <mat-label>Descripción del suceso</mat-label>
+                            <textarea matInput rows="3" formControlName="descripcion"></textarea>
+                            <mat-error *ngIf="firstFichasDataForm.get('descripcion')?.invalid">
+                                Describe brevemente qué ocurrió. Este campo no puede quedar vacío.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+
+        //second form
+        <mat-step [stepControl]="secondFichasDataForm">
+            <form [formGroup]="secondFichasDataForm">
+                <ng-template matStepLabel>
+                    Ubicación de los hechos
+                </ng-template>
+                <b>Localización del suceso </b>
+                <div class="step-content-scrollable" formGroupName="locationOfTheEvents">
+                     <!-- Ayuda general -->
+                    <mat-hint align="start" class="block mb-2">
+                        Indica con la mayor precisión posible el lugar donde ocurrieron los hechos.
+                    </mat-hint>
+                    <div class="two-container">
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Estado</mat-label>
+                                <mat-select formControlName="estado">
+                                    <mat-option *ngFor="let estado of estadosMexico" [value]="estado.nombre">
+                                        {{estado.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="secondFichasDataForm.get('locationOfTheEvents')?.get('estado')?.invalid">
+                                    El estado es obligatorio.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Municipio</mat-label>
+                                <mat-select formControlName="municipio">
+                                    @if (estadosElegido) {
+                                    <mat-option *ngFor="let municipio of municipios[estadosElegido]"
+                                        [value]="municipio">
+                                        {{municipio}}
+                                    </mat-option>
+                                    }
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="secondFichasDataForm.get('locationOfTheEvents')?.get('municipio')?.invalid">
+                                    El municipio es obligatorio.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="input-single">
+                        <mat-form-field>
+                            <mat-label>Localidad</mat-label>
+                            <input type="text"
+                                matInput
+                                formControlName="localidad"
+                                placeholder="Ej. Barrio Santa María, Centro, Rancho El Alto"
+                                aria-label="Escribe la localidad"
+                            >
+                            <mat-icon matSuffix>place</mat-icon>
+                             <mat-hint align="start">
+                                Escribe la colonia, barrio, localidad o zona específica.
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+
+        //third form
+        <mat-step [stepControl]="thirdFichasDataForm">
+            <form [formGroup]="thirdFichasDataForm">
+                <ng-template matStepLabel>
+                    Organizaciones y grupos involucrados
+                </ng-template>
+                <p> <b>Involucrados:</b> Personas y organizaciones</p>
+                <div class="step-content-scrollable" formGroupName="involucrados">
+                    <div class="input-single">
+                        <mat-form-field>
+                            <mat-label>Organización o grupo</mat-label>
+                            <mat-select formControlName="cartel" multiple aria-label="Selecciona una o varias organizaciones"
+                                aria-describedby="cartelHint cartelError">
+                                <mat-option *ngFor="let grupo of gruposDisponibles" [value]="grupo">
+                                    {{ grupo }}
+                                </mat-option>
+                                <mat-option value="Otro">Otro</mat-option>
+                            </mat-select>
+                            <mat-hint id="cartelHint" align="start">
+                                Puedes seleccionar múltiples organizaciones. Si no aparece la que buscas, selecciona "Otro".
+                            </mat-hint>
+                            <mat-error *ngIf="thirdFichasDataForm.get('involucrados')?.get('cartel')?.invalid"> La
+                                organización es obligatoria.
+                            </mat-error>
+                        </mat-form-field>
+                        <ng-container *ngIf="cartelTieneOtro">
+                            <div class="input-single-otro">
+                                <mat-form-field>
+                                    <mat-chip-grid #chipGrid >
+                                        @for (cartelObj of chipsList; track $index) {
+                                            <mat-chip-row (removed)="remove(cartelObj[0])" [ngStyle]="{'background-color': cartelObj[1]}">
+                                                {{ cartelObj[0]  }}
+                                                <button matChipRemove>
+                                                    <mat-icon>cancel</mat-icon>
+                                                </button>
+                                            </mat-chip-row>
+                                        }
+                                        <input type="text" 
+                                            placeholder="Agregue y presione enter..."
+                                            [matChipInputFor]="chipGrid"
+                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                            [matChipInputAddOnBlur]="true"
+                                            (matChipInputTokenEnd)="add($event)">
+                                    </mat-chip-grid>
+                                    <mat-hint align="start">
+                                        Escribe el nombre y presiona Enter o agregue una coma para agregarlo.
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                    <div class="perfil-add-button">
+                        <mat-hint>Haz clic para registrar información de una persona relacionada al suceso.</mat-hint>
+                        <button type="button" mat-raised-button (click)="addPerfil()"> <mat-icon>add</mat-icon>
+                            Agregar perfil
+                        </button>
+                    </div>
+
+                    <ng-container *ngIf="perfilRef.controls.length">
+                        <div class="action-perfil">
+                            <br>
+                            <div>
+                                <p class="info-text">
+                                    En esta sección se detallan las personas relacionadas al suceso, incluyendo sus características, roles, vehículos y domicilios conocidos.
+                                </p>
+                            </div>
+                            <div class="deleteButton">
+                                <p class="subsection-title">Información de perfiles</p>
+                                <button mat-input mat-flat-button color="warn" type="button" (click)="removePerfil(perfilRef.controls.length - 1)">Eliminar perfil</button>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div formArrayName="perfiles" class="container-perfil">
+                        @for (item of perfilRef.controls; track $index) {
+                            <div class="containerRepeater" #ultimoComponente>
+                                <div class="title-container container-delete">
+                                    <div>
+                                        <mat-icon>arrow_right</mat-icon>
+                                        <p>Perfil {{$index + 1}}</p>
+                                    </div>
+                                </div>
+                                <div class="input-container">
+                                    <ng-container [formGroupName]="$index">
+                                        <div class="perfil-linea perfil-identidad">
+                                            <div>
+                                                <mat-form-field>
+                                                    <mat-label>Nombre completo: </mat-label>
+                                                    <input matInput formControlName="nombre">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="perfil-linea perfil-detalles">
+                                            <div>
+                                                <mat-form-field>
+                                                    <mat-label>Edad</mat-label>
+                                                    <input matInput formControlName="edad">
+                                                    <mat-hint>Ingrese la edad estimada si no se conoce con exactitud.</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div>
+                                                <mat-form-field class="perfil-label">
+                                                    <mat-label>Género</mat-label>
+                                                    <mat-select formControlName="genero">
+                                                        <mat-option value="Masculino">Masculino</mat-option>
+                                                        <mat-option value="Femenino">Femenino</mat-option>
+                                                        <mat-option value="Otro">Otro</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="perfil-linea perfil-grid">
+                                            <div>
+                                                <mat-form-field>
+                                                    <mat-label>Organización perteneciente</mat-label>
+                                                    <mat-select formControlName="organizacion">
+                                                        <mat-option *ngFor="let cartel of obtenerCartel" [value]='cartel'>
+                                                            {{ cartel }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    <mat-hint>Seleccione la organización o grupo con el que está relacionado.</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div>
+                                                <mat-form-field>
+                                                    <mat-label>Alias</mat-label>
+                                                    <input matInput formControlName="alias">
+                                                </mat-form-field>
+                                            </div>
+                                            <div>
+                                                <mat-form-field class="perfil-label">
+                                                    <mat-label>Rol</mat-label>
+                                                    <input matInput formControlName="rol">
+                                                    <mat-hint>Rol o función dentro del grupo (ej. líder, sicario, enlace, etc.).</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <div>
+                                                <mat-form-field class="perfil-label">
+                                                    <mat-label>Estatus</mat-label>
+                                                    <mat-select formControlName="estatus">
+                                                        <mat-option value="Activo">Activo</mat-option>
+                                                        <mat-option value="Capturado">Capturado</mat-option>
+                                                        <mat-option value="Fallecido">Fallecido</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="div-foto">
+                                            <mat-hint align="start">Fotografía de la persona si está disponible.</mat-hint>
+                                            <div class="perfil-foto">
+                                                <app-image-form-control formControlName="foto"
+                                                    [imageSwitch]='true' width="100%" height="230px"/>
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <p>Informacion</p>
+                                        <div class="button-perfil-info">
+                                            <button type="button" mat-stroked-button (click)="addAddresses($index)">
+                                                <mat-icon>add</mat-icon>Agregar domicilio
+                                            </button>
+                                            <button type="button" mat-stroked-button (click)="addVehicles($index)">
+                                                <mat-icon>add</mat-icon>Agregar vehiculos
+                                            </button>
+                                        </div>
+
+                                        <div class="perfil-info" formGroupName="informacion">
+                                            <div class="info-domicilio" formArrayName="propiedades">
+                                                @for (domicilio of addressesMap.get($index); track $index) {
+                                                <div class="container-repeate-address">
+                                                    <div class="title-container">
+                                                        <mat-icon>arrow_right</mat-icon>
+                                                        <p>Domicilio {{$index + 1}}</p>
+                                                    </div>
+
+                                                    <div class="container-domicilio">
+                                                        <ng-container [formGroupName]="$index">
+                                                            <div class="perfil-linea perfil-identidad">
+                                                                <div>
+                                                                    <mat-form-field>
+                                                                        <mat-label>Estado </mat-label>
+                                                                        <input matInput formControlName="estado">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Municipio</mat-label>
+                                                                        <input matInput formControlName="municipio">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Localidad</mat-label>
+                                                                        <input matInput formControlName="localidad">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Colonia</mat-label>
+                                                                        <input matInput formControlName="colonia">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Calle</mat-label>
+                                                                        <input matInput formControlName="calle">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Numero Exterior</mat-label>
+                                                                        <input matInput formControlName="numeroExterior">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Numero Interior</mat-label>
+                                                                        <input matInput formControlName="numeroInterior">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>CP</mat-label>
+                                                                        <input matInput formControlName="cp">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-identidad">
+                                                                <div>
+                                                                    <mat-form-field>
+                                                                        <mat-label>Referencias </mat-label>
+                                                                        <textarea matInput rows="3"
+                                                                            formControlName="referencias"></textarea>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                }
+                                                @if (addressesMap.get($index)?.length) {
+                                                <button type="button" mat-raised-button (click)="removeAddresses($index)">
+                                                    <mat-icon>remove</mat-icon>Eliminar domicilio
+                                                </button>
+                                                }
+                                            </div>
+                                            <div class="info-vehiculos" formArrayName="pertenencias">
+                                                @for (vehiculo of vehiclesMap.get($index); track $index) {
+                                                <div class="container-repeate-address">
+                                                    <div class="title-container">
+                                                        <mat-icon>arrow_right</mat-icon>
+                                                        <p>Vehiculo {{$index + 1}}</p>
+                                                    </div>
+
+                                                    <div class="container-domicilio">
+                                                        <ng-container [formGroupName]="$index">
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field>
+                                                                        <mat-label>Marca </mat-label>
+                                                                        <input matInput formControlName="marca">
+                                                                        <mat-hint>Ej. Toyota, Chevrolet, etc.</mat-hint>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field>
+                                                                        <mat-label>Modelo </mat-label>
+                                                                        <input matInput formControlName="marca">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Color</mat-label>
+                                                                        <input matInput formControlName="color">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Placas</mat-label>
+                                                                        <input matInput formControlName="placas">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Tipo</mat-label>
+                                                                        <input matInput formControlName="tipo">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Año</mat-label>
+                                                                        <input matInput formControlName="año">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-detalles">
+                                                                <div>
+                                                                    <mat-form-field class="perfil-label">
+                                                                        <mat-label>Serie</mat-label>
+                                                                        <input matInput formControlName="serie">
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+                                                            <div class="perfil-identidad">
+                                                                <div>
+                                                                    <mat-form-field>
+                                                                        <mat-label>Observacion </mat-label>
+                                                                        <textarea matInput rows="3"
+                                                                            formControlName="observaciones"></textarea>
+                                                                    </mat-form-field>
+                                                                </div>
+                                                            </div>
+
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                }
+
+                                                @if (vehiclesMap.get($index)?.length) {
+                                                <button type="button" mat-raised-button (click)="removeVehicles($index)">
+                                                    <mat-icon>remove</mat-icon> Eliminar vehiculo
+                                                </button>
+                                                }
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <mat-hint [ngStyle]="{'text-align': 'center'}">Puede agregar múltiples domicilios o vehículos si aplica.</mat-hint>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <br>
+                        }
+                        
+                    </div>
+
+                    <div class="input-single">
+                        <mat-form-field>
+                            <mat-label>Autoridades</mat-label>
+                                <mat-select formControlName="autoridades" multiple>
+                                    <mat-option value="Secretaría de Seguridad y Protección Ciudadana">Secretaría de Seguridad y Protección Ciudadana (SSPC)</mat-option>
+                                    <mat-option value="Secretaría de la Defensa Nacional">Secretaría de la Defensa Nacional (SEDENA)</mat-option>
+                                    <mat-option value="Secretaría de Marina">Secretaría de Marina (SEMAR)</mat-option>
+                                    <mat-option value="Guardia Nacional">Guardia Nacional</mat-option>
+                                    <mat-option value="Fiscalía General de la República">Fiscalía General de la República (FGR)</mat-option>
+                                    <mat-option value="Centro Nacional de Inteligencia">Centro Nacional de Inteligencia (CNI)</mat-option>
+                                    <mat-option value="Otro">Otro</mat-option>
+                                </mat-select>
+
+                            <mat-hint>Puedes seleccionar múltiples autoridades.</mat-hint>
+                            <mat-error *ngIf="thirdFichasDataForm.get('involucrados')?.get('autoridades')?.invalid">
+                                Este campo es obligatorio.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+
+        //fourth form
+        <mat-step [stepControl]="fourthFichasDataForm">
+            <form [formGroup]="fourthFichasDataForm">
+                <ng-template matStepLabel>
+                    Evidencia de los hechos
+                </ng-template>
+                <strong>Apartado de evidencias</strong>
+                <div class="step-content-scrollable" formGroupName="evidencias">
+                    <div class="evidencias">
+                        <div>
+                            <div> 
+                                <strong>Selector de imagenes:</strong> Puedes subir fotografías del lugar del suceso, evidencia visual o cualquier otra imagen relevante.
+                            </div>
+                            <br>
+                            <app-image-form-control 
+                                height="240px" 
+                                [imageSwitch]='true'
+                                formControlName="imagenes" /> 
+                            <br>
+                        </div>
+                        <br>
+                        <div>
+                            <div>
+                                <strong>Espacion de videos</strong> Adjunta grabaciones de cámaras de seguridad, celulares u otras fuentes.
+                            </div>
+                            <br>
+                            <app-video-form-control 
+                                height="240px"
+                                [videoSwitch]="true"
+                                formControlName="videos"
+                            />
+                        </div>
+                        <br>
+                        <div>
+                            <div>
+                                <strong>Espacio de Documentos</strong> Sube informes, actas, archivos forenses, reportes o documentos legales relacionados.
+                            </div>
+                            <br>
+                            <app-documents-form-control 
+                                height="240px" 
+                                [imageSwitch]='false'
+                                formControlName="documentos" 
+                            />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+
+        //fifth form
+        <mat-step [stepControl]="fifthFichasDataForm">
+            <form [formGroup]="fifthFichasDataForm">
+                <ng-template matStepLabel>
+                    Verificación y fuentes
+                </ng-template>
+
+                <strong>Fuentes oficiales</strong>
+
+                <div class="step-content-scrollable">
+                    <div class="source-input-wrapper">
+                        <div class="add-source-button-container">
+                            <button mat-flat-button color="primary" (click)="addFuentes()" type="button">
+                                <mat-icon>add</mat-icon> Agregar fuente
+                            </button>
+                        </div>
+
+                        @if (fuentesRef.length) {
+                            <div class="source-form-wrapper">
+                                <div class="source-info-header">
+                                    <strong>Agregar una fuente de información</strong>
+                                    <p class="subtitle">
+                                        Indica de dónde proviene la información para esta noticia. 
+                                        Completa los campos según el tipo de fuente.
+                                    </p>
+                                </div>
+                                
+                                <div class="source-form-container" formArrayName="fuentes">
+                                    @for (fuente of fuentesRef.controls; track $index) {
+                                        <div class="form-container-item" [formGroupName]="$index">
+                                            <div class="input-single">
+                                                <mat-form-field>
+                                                    <mat-label>Tipo de fuente</mat-label>
+                                                    <mat-select formControlName="type" (valueChange)="editFuente($index, $event)">
+                                                        <mat-option value="Enlace/URL">
+                                                            <mat-icon>link</mat-icon> Enlace/URL
+                                                        </mat-option>
+                                                        <mat-option value="propia">
+                                                            <mat-icon>person</mat-icon> Fuente Personal Propia
+                                                        </mat-option>
+                                                        <mat-option value="entrevista">
+                                                            <mat-icon>chat_bubble</mat-icon> Conversación/Entrevista
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    <mat-hint>Seleccione el tipo de fuente</mat-hint>
+                                                </mat-form-field>
+                                            </div>
+                                            <ng-container *ngIf="fuente.get('type')?.value === 'Enlace/URL'">
+                                                <div class="input-single">
+                                                    <mat-form-field>
+                                                        <mat-label>URL</mat-label>
+                                                        <input type="text" matInput formControlName="URL">
+                                                    </mat-form-field>
+                                                </div>
+                                            </ng-container>
+                                            <div class="input-single">   
+                                                <mat-form-field>
+                                                    <mat-label>Titulo</mat-label>
+                                                    <input type="text" matInput formControlName="title">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="two-container">
+                                                <div>
+                                                    <mat-form-field>
+                                                        <mat-label>Autor</mat-label>
+                                                        <input type="text" matInput formControlName="autor">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div>
+                                                    <mat-form-field>
+                                                        <mat-label>Fecha</mat-label>
+                                                        <input type="text" matInput formControlName="fecha">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    }
+                                </div>
+
+                                <div class="deleteFuente">
+                                    <button type="button" (click)="removeFuente()" mat-flat-button color="warn">
+                                        Eliminar ultima fuente
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        }
+                        <div class="input-single checkbox">
+                            <mat-checkbox formControlName="verificado">
+                                Confirmo que todos los datos de esta noticia son correctos.
+                            </mat-checkbox>
+                            <p class="hint">
+                                Si no está seguro, deje la casilla sin marcar.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+    </mat-stepper>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="stepper.previous()" [disabled]="stepper.selectedIndex === 0">
+        <mat-icon>navigate_before</mat-icon> Anterior
+    </button>
+    <!-- *If we are at the last step, then we show the submit button -->
+    @if (stepper.steps.length -1 != stepper.selectedIndex ) {
+        <!-- otherwise we show the next button -->
+        <button mat-flat-button class="button-icon-normal" (click)="stepper.next()" [ngStyle]="{'background-color': '#000', 'color': '#fff'}"  >
+            <span>Siguiente</span>
+        </button>
+    } @else {
+        <button mat-flat-button color="primary" (click)="savedata()">
+            Enviar Formulario  <mat-icon>save</mat-icon>
+        </button>
+    }
+</mat-dialog-actions>
+

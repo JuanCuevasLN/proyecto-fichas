@@ -1,0 +1,40 @@
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" opened mode="side">
+    <div class="info">
+      <div class="Imagen">
+        <img src="../../assets/ChatGPT Image 8 jul 2025, 12_32_48 a.m..png" alt="">
+      </div>
+      <p>SoftDetected</p>
+    </div>
+    <div class="nav-content">
+      <app-side-nav></app-side-nav>
+    </div>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <div class="nav">
+      <div class="buttonSideNav">
+        <mat-icon (click)="drawer.toggle()" (click)="swithSide()" >{{ drawer.opened ? 'radio_button_checked' : 'radio_button_unchecked' }}</mat-icon>  
+      </div>
+
+      <div class="container-search">
+        <mat-icon>search</mat-icon>
+        <div class="search">
+          <input type="text" placeholder="Buscar...">
+        </div>
+      </div>
+
+      <div class="config">
+        <mat-icon>notifications</mat-icon>
+        <img src="https://cdn-icons-png.flaticon.com/512/1361/1361728.png" alt="">
+        <p>Juan de la Cruz</p>
+      </div>
+
+    </div>
+
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</mat-drawer-container>

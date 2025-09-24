@@ -1,0 +1,91 @@
+.container-drag-drop {
+  display: flex;
+  color: black;
+  border-radius: 5px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  outline: 2px dashed rgba(59, 130, 246, 0.4);
+  transition: .7s all;
+}
+
+.container-drag-drop:hover {
+    cursor: pointer;
+     outline: 2px dashed #3b82f6;
+}
+
+.container-drag-drop div {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-drag-drop .container-img {
+    gap: 8px;
+    width: 95%;
+    height: 55%;
+    display: grid;
+    align-items: center;    
+    justify-items: center;       
+    justify-content: center;    
+    grid-template-columns: repeat(auto-fit, minmax(100px, max-content));
+}
+
+.container-drag-drop .container-img .big-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 58px;
+    color: #525151;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-drag-drop .container-info {
+    height: 45%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
+}
+
+.container-drag-drop .container-info strong {
+  font-size: 12px;
+}
+
+p {
+    font-size: 12px;
+}
+
+img {
+    max-width: 75px;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.btn-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #F04544;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: none;
+  z-index: 2;
+}
+
+.img-wrapper:hover .btn-delete {
+  display: block;
+}
