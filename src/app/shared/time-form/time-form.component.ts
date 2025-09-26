@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
   ],
 })
 export class TimeFormComponent implements ControlValueAccessor {
-  public hora: string = '01:00 PM';
+  public hora: string = 'xx:xx xx';
 
   // private el: ElementRef<HTMLElement>; Necesita inicializarse, y el contructor ya lo hace
   constructor(private el: ElementRef<HTMLElement>) {}
@@ -32,9 +32,9 @@ export class TimeFormComponent implements ControlValueAccessor {
   hours = Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0'));
   minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
-  hour: string = '01';
-  minute: string = '00';
-  period: 'AM' | 'PM' = 'PM';
+  hour: string = 'xx';
+  minute: string = 'xx';
+  period: 'AM' | 'PM' | 'xx' = 'xx';
 
   private onChangeFn: any = () => {};
   private onTouchedFn: any = () => {};

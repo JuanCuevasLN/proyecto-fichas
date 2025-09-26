@@ -448,8 +448,9 @@ export class CreationAndUpdateFichasComponent {
     const res = forms.reduce((acc, form) => ({...acc, ...form.value}), {});
     const cleanedRes  = this.removeEmptyFields(res)
     const sanitizeRes = this.sanitizeData(cleanedRes);
+    this.formData.append('data', JSON.stringify(sanitizeRes))
 
-    this.fichasServiceService.sentDataFichas(sanitizeRes).subscribe({
+    this.fichasServiceService.sentDataFichas(this.formData).subscribe({
       next: (res: any) => {
         console.log(res)
       },

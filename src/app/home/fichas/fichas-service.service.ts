@@ -1,6 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { inject, Inject, Injectable } from '@angular/core';
-import { FichaDelitoData } from '../../models/ficha.interface';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { environments } from '../../environments/environments';
 
 @Injectable({
@@ -14,9 +13,8 @@ export class FichasServiceService {
 
   constructor() { }
 
-  sentDataFichas(data: Partial<FichaDelitoData>) {
+  sentDataFichas(data: Partial<FormData>) {
     console.log(data)
-    console.log(this.records)
     return this.http.post(this.records, data, { withCredentials: true })
   }
 }
