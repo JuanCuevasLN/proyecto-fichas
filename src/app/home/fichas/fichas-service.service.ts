@@ -13,8 +13,12 @@ export class FichasServiceService {
 
   constructor() { }
 
-  sentDataFichas(data: Partial<FormData>) {
+  sentDataFichas(data: FormData) {
     console.log(data)
+    data.forEach(datos => {
+      console.log(datos)
+    })
+
     return this.http.post(this.records, data, { withCredentials: true })
   }
 }

@@ -359,21 +359,20 @@ export class CreationAndUpdateFichasComponent {
     })
   }
 
-  formData = new FormData();
-  private sanitizeData(data: any): any {
+  private sanitizeData(data: any, formData: FormData): any {
     if (data instanceof File) {
       const key = crypto.randomUUID()
-      this.formData.append(key, data);
+      formData.append(key, data);
       return key
     }
 
     if (Array.isArray(data)) {
-      return data.map(item => this.sanitizeData(item));
+      return data.map(item => this.sanitizeData(item, formData));
     }
 
     if (typeof data === "object" && data != null) {
       return Object.keys(data).reduce((acc, key) => {
-        acc[key] = this.sanitizeData(data[key]);
+        acc[key] = this.sanitizeData(data[key], formData);
         return acc;
       }, {} as any);
     }
@@ -417,6 +416,7 @@ export class CreationAndUpdateFichasComponent {
   }
 
   savedata() {
+    const formData = new FormData();
     const cartelValue = this.thirdFichasDataForm.get('involucrados')?.get('cartel')?.value;
     const refArrValueCartel: string[] = Array.isArray(cartelValue) ? cartelValue : [];
 
@@ -447,10 +447,10 @@ export class CreationAndUpdateFichasComponent {
 
     const res = forms.reduce((acc, form) => ({...acc, ...form.value}), {});
     const cleanedRes  = this.removeEmptyFields(res)
-    const sanitizeRes = this.sanitizeData(cleanedRes);
-    this.formData.append('data', JSON.stringify(sanitizeRes))
+    const sanitizeRes = this.sanitizeData(cleanedRes, formData);
+    formData.append('data', JSON.stringify(sanitizeRes))
 
-    this.fichasServiceService.sentDataFichas(this.formData).subscribe({
+    this.fichasServiceService.sentDataFichas(formData).subscribe({
       next: (res: any) => {
         console.log(res)
       },
